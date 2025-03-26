@@ -50,5 +50,9 @@ const uploadFiles = async (files: FileList) => {
 };
 
 export default function Home() {
-  return <div>Hello</div>;
+  return (
+    <div>
+      <input type="file" />
+    </div>
+  );
 }
