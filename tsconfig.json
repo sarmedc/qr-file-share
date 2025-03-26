@@ -22,7 +22,7 @@
     "paths": {
       "@/*": ["./*"],
       "components/*": ["./components/*"],
-      "supabase/*": ["./supabase"],
+      "supabase/*": ["./supabase/*"],
       "styles/*": ["./src/styles/*"],
       "context/*": ["./src/context/*"]
     }
