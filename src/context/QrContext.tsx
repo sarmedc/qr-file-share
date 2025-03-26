@@ -1,10 +1,21 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
+import { UUIDTypes } from "uuid";
+
+export type File = {
+  id: UUIDTypes;
+  group_id: string;
+  file_url: string;
+  expires_at: Date;
+  created_at: Date;
+};
 
 interface QrContextProps {
-  selectedFiles: FileList;
-  setSelectedFiles: React.Dispatch<React.SetStateAction<FileList>>;
+  selectedFiles: any[];
+  setSelectedFiles: React.Dispatch<React.SetStateAction<any[]>>;
+  files: File[];
+  setFiles: React.Dispatch<React.SetStateAction<any[]>>;
   qrCodeUrl: string;
   setQrCodeUrl: React.Dispatch<React.SetStateAction<string>>;
   tab: string;
@@ -12,13 +23,17 @@ interface QrContextProps {
   handleSetQrCodeUrl: (url: string) => void;
 }
 
+interface Props {
+  children?: ReactNode;
+}
+
 const Context = createContext<QrContextProps>({} as QrContextProps);
 
-export function QrContext({ children }) {
-  const [selectedFiles, setSelectedFiles] = useState<FileList>([]);
+export function QrContext({ children }: Props) {
+  const [selectedFiles, setSelectedFiles] = useState<any[]>([]);
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [tab, setTab] = useState("upload");
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<any[]>([]);
 
   const handleSetQrCodeUrl = (url: string) => {
     setQrCodeUrl(url);

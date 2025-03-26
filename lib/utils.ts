@@ -8,8 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const uploadFiles = async (
-  files: FileList,
-  setQrCodeUrl: React.Dispatch<React.SetStateAction<string>>
+  files: any[],
+  handleSetQrCodeUrl: (url: string) => void
 ) => {
   const groupId = uuidv4(); // A single ID for this batch of files
   const uploadedFiles = [];
@@ -36,10 +36,13 @@ export const uploadFiles = async (
   // Store file metadata in Supabase
   await supabase.from("files").insert(uploadedFiles);
 
-  setQrCodeUrl(`${window.location.origin}/file/${groupId}`); // Generate QR code
+  handleSetQrCodeUrl(`${window.location.origin}/file/${groupId}`); // Generate QR code
 };
 
-export const fetchFiles = async (group_id: string, setFiles) => {
+export const fetchFiles = async (
+  group_id: string,
+  setFiles: React.Dispatch<React.SetStateAction<any[]>>
+) => {
   const { data } = await supabase
     .from("files")
     .select("*")
