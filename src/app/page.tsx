@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "supabase/index";
+import { Upload } from "components/Upload";
 
 // const uploadFile = async (file: File) => {
 //   const { data, error } = await supabase.storage
@@ -52,7 +53,10 @@ const uploadFiles = async (files: FileList) => {
 export default function Home() {
   return (
     <div>
-      <input type="file" />
+      <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+        QR File Share
+      </h2>
+      <Upload />
     </div>
   );
 }
