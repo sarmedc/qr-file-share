@@ -1,6 +1,8 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import useRouter from "next";
-import { supabase } from "supabase/index";
+import { supabase } from "supabase/client";
 
 export const File = () => {
   const { group_id } = useRouter().query;
