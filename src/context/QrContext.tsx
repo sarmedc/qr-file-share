@@ -18,6 +18,7 @@ export function QrContext({ children }) {
   const [selectedFiles, setSelectedFiles] = useState<FileList>([]);
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [tab, setTab] = useState("upload");
+  const [files, setFiles] = useState([]);
 
   const handleSetQrCodeUrl = (url: string) => {
     setQrCodeUrl(url);
@@ -34,6 +35,8 @@ export function QrContext({ children }) {
         handleSetQrCodeUrl,
         tab,
         setTab,
+        files,
+        setFiles,
       }}
     >
       {children}

@@ -38,3 +38,12 @@ export const uploadFiles = async (
 
   setQrCodeUrl(`${window.location.origin}/file/${groupId}`); // Generate QR code
 };
+
+export const fetchFiles = async (group_id: string, setFiles) => {
+  const { data } = await supabase
+    .from("files")
+    .select("*")
+    .eq("group_id", group_id);
+
+  setFiles(data || []);
+};
