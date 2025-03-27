@@ -7,10 +7,10 @@ import { useDropzone } from "react-dropzone";
 import { Card } from "@/components/ui/card";
 import { Upload as UploadIcon } from "lucide-react";
 import { useQrContext } from "context/QrContext";
-import { uploadFiles } from "@/lib/utils";
+import { uploadFiles } from "app/actions";
 
 export const UploadComponent = () => {
-  const { selectedFiles, setSelectedFiles, handleSetQrCodeUrl } =
+  const { selectedFiles, setSelectedFiles, handleSetQrCodeUrl, UID } =
     useQrContext();
   const onDrop = useCallback(
     (acceptedFiles: any) => {
@@ -29,6 +29,11 @@ export const UploadComponent = () => {
       {file.path} - {file.size} bytes
     </li>
   ));
+
+  const handleUpload = async () => {
+    const url = await uploadFiles(selectedFiles, UID);
+    handleSetQrCodeUrl(url || "");
+  };
 
   return (
     <Card className="md:m-10 sm:m-7 p-5">
@@ -61,9 +66,7 @@ export const UploadComponent = () => {
           </aside>
         </section>
       </div>
-      <Button onClick={() => uploadFiles(selectedFiles, handleSetQrCodeUrl)}>
-        Upload and Generate QR
-      </Button>
+      <Button onClick={handleUpload}>Upload and Generate QR</Button>
     </Card>
   );
 };

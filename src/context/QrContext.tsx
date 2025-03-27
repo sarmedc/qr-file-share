@@ -21,6 +21,8 @@ interface QrContextProps {
   tab: string;
   setTab: React.Dispatch<React.SetStateAction<string>>;
   handleSetQrCodeUrl: (url: string) => void;
+  UID: string;
+  setUID: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface Props {
@@ -34,6 +36,7 @@ export function QrContext({ children }: Props) {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [tab, setTab] = useState("upload");
   const [files, setFiles] = useState<any[]>([]);
+  const [UID, setUID] = useState("");
 
   const handleSetQrCodeUrl = (url: string) => {
     setQrCodeUrl(url);
@@ -52,6 +55,8 @@ export function QrContext({ children }: Props) {
         setTab,
         files,
         setFiles,
+        UID,
+        setUID,
       }}
     >
       {children}

@@ -3,13 +3,18 @@
 import { useEffect } from "react";
 import { supabase } from "supabase/client";
 import { useQrContext, File } from "@/src/context/QrContext";
-import { fetchFiles } from "@/lib/utils";
+import { fetchFiles } from "app/actions";
 
 export const FileList = ({ group_id }: { group_id: string }) => {
   const { files, setFiles } = useQrContext();
 
   useEffect(() => {
-    if (group_id) fetchFiles(group_id, setFiles);
+    const handleFetch = async () => {
+      const data = await fetchFiles(group_id);
+      setFiles(data || []);
+    };
+
+    if (group_id) handleFetch();
   }, [group_id, setFiles]);
 
   return (

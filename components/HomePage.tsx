@@ -4,13 +4,19 @@ import { useQrContext } from "context/QrContext";
 import { UploadComponent } from "@/components/UploadComponent";
 import { QRComponent } from "@/components/QRComponent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect } from "react";
 
-export const HomePage = () => {
-  const { qrCodeUrl, tab, setTab } = useQrContext();
+export const HomePage = ({ uid }: { uid: string }) => {
+  const { qrCodeUrl, tab, setTab, setUID } = useQrContext();
 
   const handleTabChange = (value: string) => {
     setTab(value);
   };
+
+  useEffect(() => {
+    if (!uid) return;
+    setUID(uid);
+  }, [uid, setUID]);
 
   return (
     <Tabs defaultValue="upload" value={tab} onValueChange={handleTabChange}>
