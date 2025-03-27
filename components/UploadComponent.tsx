@@ -23,7 +23,7 @@ export const UploadComponent = () => {
     multiple: true,
     onDrop,
   });
-  console.log(selectedFiles);
+
   const files = selectedFiles.map((file) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
