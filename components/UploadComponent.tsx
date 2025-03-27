@@ -8,13 +8,10 @@ import { Card } from "@/components/ui/card";
 import { Upload as UploadIcon } from "lucide-react";
 import { useQrContext } from "context/QrContext";
 import { uploadFiles } from "app/actions";
-import { usePathname } from "next/navigation";
 
 export const UploadComponent = () => {
   const { selectedFiles, setSelectedFiles, handleSetQrCodeUrl, UID } =
     useQrContext();
-  const pathname = usePathname();
-  const path = pathname === "/" ? "" : pathname;
 
   const onDrop = useCallback(
     (acceptedFiles: any) => {
@@ -35,7 +32,7 @@ export const UploadComponent = () => {
   ));
 
   const handleUpload = async () => {
-    const url = await uploadFiles(selectedFiles, UID, path);
+    const url = await uploadFiles(selectedFiles, UID);
     console.log(url);
     handleSetQrCodeUrl(url || "");
   };

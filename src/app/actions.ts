@@ -4,11 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "supabase/client";
 import { createClient } from "supabase/server";
 
-export const uploadFiles = async (
-  files: any[],
-  UID: string,
-  pathname: string
-) => {
+export const uploadFiles = async (files: any[], UID: string) => {
   const supaServ = await createClient();
 
   const groupId = uuidv4(); // A single ID for this batch of files
@@ -43,7 +39,7 @@ export const uploadFiles = async (
   await supaServ.from("files").insert(uploadedFiles);
 
   // Return path for QR code generation
-  const finalPath = pathname + "/file/" + groupId;
+  const finalPath = process.env.NEXT_PUBLIC_URL + "/file/" + groupId;
   return finalPath;
 };
 
