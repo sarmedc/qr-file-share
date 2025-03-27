@@ -3,12 +3,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "supabase/client";
 import { createClient } from "supabase/server";
-import { headers } from "next/headers";
 
-export const uploadFiles = async (files: any[], UID: string) => {
+export const uploadFiles = async (
+  files: any[],
+  UID: string,
+  pathname: string
+) => {
   const supaServ = await createClient();
-  const headersList = headers();
-  const pathname = (await headersList).get("x-pathname");
 
   const groupId = uuidv4(); // A single ID for this batch of files
   const uploadedFiles = [];
@@ -20,7 +21,7 @@ export const uploadFiles = async (files: any[], UID: string) => {
 
     if (error) {
       console.error("Upload error:", error);
-      return;
+      continue;
     }
 
     uploadedFiles.push({
@@ -33,11 +34,17 @@ export const uploadFiles = async (files: any[], UID: string) => {
     });
   }
 
+  // If no files were uploaded, return an error
+  if (uploadedFiles.length === 0) {
+    throw new Error("No files were uploaded successfully.");
+  }
+
   // Store file metadata in Supabase
   await supaServ.from("files").insert(uploadedFiles);
 
   // Return path for QR code generation
-  return `${pathname}/file/${groupId}`;
+  const finalPath = pathname + "/file/" + groupId;
+  return finalPath;
 };
 
 export const fetchFiles = async (group_id: string) => {
