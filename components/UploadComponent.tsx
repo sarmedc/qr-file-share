@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useDropzone } from "react-dropzone";
@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Upload as UploadIcon } from "lucide-react";
 import { useQrContext } from "context/QrContext";
 import { uploadFiles } from "app/actions";
+import { convertSize } from "@/lib/utils";
 
 export const UploadComponent = () => {
   const { selectedFiles, setSelectedFiles, handleSetQrCodeUrl, UID } =
@@ -25,11 +26,15 @@ export const UploadComponent = () => {
     onDrop,
   });
 
-  const files = selectedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
+  const files = useMemo(
+    () =>
+      selectedFiles.map((file) => (
+        <li key={file.path}>
+          {file.path} - {convertSize(file.size)} bytes
+        </li>
+      )),
+    [selectedFiles]
+  );
 
   const handleUpload = async () => {
     const url = await uploadFiles(selectedFiles, UID);

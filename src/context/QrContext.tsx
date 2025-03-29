@@ -3,18 +3,24 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { UUIDTypes } from "uuid";
 
+export type FileMetadata = {
+  file_url: string;
+  file_name: string;
+  file_size: string;
+  file_date: string;
+};
 export type File = {
   id: UUIDTypes;
   group_id: string;
-  file_url: string;
   expires_at: Date;
   created_at: Date;
+  metadata: FileMetadata;
 };
 
 interface QrContextProps {
   selectedFiles: any[];
   setSelectedFiles: React.Dispatch<React.SetStateAction<any[]>>;
-  files: File[];
+  files: any[];
   setFiles: React.Dispatch<React.SetStateAction<any[]>>;
   qrCodeUrl: string;
   setQrCodeUrl: React.Dispatch<React.SetStateAction<string>>;

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { FileList } from "@/components/FilesList";
 import { createClient } from "supabase/server";
+import { QrContext } from "context/QrContext";
 
 export default async function File({
   params,
@@ -19,5 +20,9 @@ export default async function File({
 
   const { group_id } = await params;
 
-  return <FileList group_id={group_id} />;
+  return (
+    <QrContext>
+      <FileList group_id={group_id} />;
+    </QrContext>
+  );
 }
